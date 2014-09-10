@@ -102,7 +102,7 @@ def getContent(fileName):
 #fn = "oneexample.json"
 fn = "v1.json"
 g = getContent(fn)
-print "done. saving..."
+print "\ndone. saving..."
 
 of = "C:/Users/vdboer/git/divedata/oi_enriched.ttl"
 g.serialize(of, format='turtle') 
