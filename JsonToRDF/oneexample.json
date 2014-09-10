@@ -1,0 +1,212 @@
+[{
+  "_id": "entity/text/cultural/enrichedvideo/101",
+  "title": "oai:openimages.eu:28518",
+  "domain": "cultural",
+  "format": "text",
+  "documentType": "enrichedvideo",
+  "source": "openimages",
+  "metadataContent": {
+    "identifier": "oai:openimages.eu:28518",
+    "datestamp": "2014-06-06T12:56:44Z",
+    "specSet": "beeldengeluid",
+    "storage_url": "/videostorage/fullvideos/28572.28517.BG_28215.mp4",
+    "videoName": "28572.28517.BG_28215.mp4",
+    "metadata": {
+      "title": {
+        "nl": "Brand in petroleum- en asfaltfabriek",
+        "en": "Fire in the petroleum and asphalt factory"
+      },
+      "alternativeTitle": {
+        "nl": "Weeknummer: 24-22",
+        "en": "Week number: 24-22"
+      },
+      "creator": {
+        "nl": "Polygoon-Profilti (producent) / Nederlands Instituut voor Beeld en Geluid (beheerder)",
+        "en": "Polygoon-Profilti (producer) / Netherlands Institute for Sound and Vision (curator)"
+      },
+      "subject": {
+        "nl": [
+          "Nederlandse Petroleum en Asphalt Maatschappij",
+          "branden",
+          "rook",
+          "fabrieken",
+          "oliemaatschappijen"
+        ],
+        "en": [
+          "ederlandse Petroleum en Asphalt Maatschappij",
+          "fires",
+          "smoke",
+          "factories",
+          "oil companies"
+        ]
+      },
+      "description": {
+        "nl": "Bioscoopjournaals waarin Nederlandse onderwerpen van een bepaalde week worden gepresenteerd.",
+        "en": "Newsreels in which Dutch subjects of a certain week are presented."
+      },
+      "abstract": {
+        "nl": "Beelden van een zeer grote brand met totale luchtverduistering als gevolg van enorme rookwolken. De brand vindt plaats bij de NEDPAM, de Nederlandse Petroleum- en Asphalt Maatschappij. Brand en bluswerk duren drie dagen. Diverse totaalshots brandend fabrieksterrein aan het water met zeer veel rookontwikkeling 57\". Medium shot mannen redden vaten en andere zaken van fabrieksterrein, dichte rook rondom 27\". Diverse instellingen brand, rook, luchtverduistering 49\". Smeulende resten van opslagtanks, enkele uitslaande vlammen 18\". Redden van inboedel uit bovenraam 10\". Totaalshot brand en cu's nasmeulen 34\".",
+        "en": "Footage of a very large fire with total blackout as a result of the clouds of smoke. The fire takes place at the NEPDAM, the Nederlandse Petroleum- en Asphalt Maatschappij (Netherlands Petroleum and Asphalt Company). The fire and the extinguishing take three days. Several overall shots of the burning factory terrain on the waterside with very heavy smoke production 57\". Medium shot of men savign barrels and other things from the factory terrain, thick smoke all around 27\". Several shots of fire, smoke, blackout 49\". Smouldering remains of storage tanks, some flames breaking out 18\". Saving of the furniture from the top window 10\". Overall shot and close ups of smouldering remains 34\"."
+      },
+      "publisher": {
+        "name": "Nederlands Instituut voor Beeld en Geluid",
+        "source": "http://www.openbeelden.nl/users/beeldengeluid"
+      },
+      "date": "1924-07-25",
+      "extent": "00:03:14",
+      "online_url": "http://openbeelden.nl/files/28/28572.28517.BG_28215.mp4",
+      "medium": {
+        "sd": [
+          "http://openbeelden.nl/files/28/28572.28517.BG_28215.mp4",
+          "http://openbeelden.nl/files/28/28566.28517.BG_28215.ogv"
+        ],
+        "hd": [
+          "http://openbeelden.nl/files/28/28569.28517.BG_28215.ogv"
+        ],
+        "playlist-sd": [
+          "http://openbeelden.nl/files/28/38683.28517.BG_28215.m3u8"
+        ],
+        "mobile-sd": [
+          "http://openbeelden.nl/files/28/38635.28517.BG_28215.ts"
+        ],
+        "intermediate": [
+          "http://openbeelden.nl/files/28/28521.28517.BG_28215.mpeg"
+        ],
+        "source hi": [
+          "http://openbeelden.nl/files/28/28517.BG_28215.mpg"
+        ],
+        "thumbnail": [
+          "http://openbeelden.nl/images/603548/Brand_in_petroleum-_en_asfaltfabriek_%281_37%29.png"
+        ]
+      },
+      "source": {
+        "nl": "BG_28215",
+        "en": "BG_28215"
+      },
+      "language": "nl",
+      "spatial": [],
+      "people": {
+        "nl": []
+      },
+      "attributionName": {
+        "nl": [
+          "Polygoon-Profilti (producent) / Nederlands Instituut voor Beeld en Geluid (beheerder)"
+        ]
+      },
+      "attributionURL": "http://openbeelden.nl/media/28518",
+      "license": "http://creativecommons.org/publicdomain/mark/1.0/"
+    }
+  },
+  "hasKeyframes": [],
+  "parents": [
+    "entity/video/cultural/fullvideo/101"
+  ],
+  "hasEnrichment": [
+    {
+      "diveEntityType": "Event",
+      "label": "grote brand",
+      "startOffset": 20,
+      "endOffset": 32,
+      "type": null,
+      "resource": null,
+      "prov": "crowdsourcing",
+      "hasTimeStamp": "1924-07-25",
+      "hasLinks": [],
+      "id": "a70783a2684af23d99538cc12f23b2d4"
+    },
+    {
+      "diveEntityType": "Event",
+      "label": "totale luchtverduistering",
+      "startOffset": 36,
+      "endOffset": 62,
+      "type": null,
+      "resource": null,
+      "prov": "crowdsourcing",
+      "hasTimeStamp": "1924-07-25",
+      "hasLinks": [],
+      "id": "0ba1cebe28215ce8e9123b4173950a33"
+    },
+    {
+      "diveEntityType": "Location",
+      "label": "Brand",
+      "startOffset": 185,
+      "endOffset": 190,
+      "type": "DBpedia::Place",
+      "resource": "http://dbpedia.org/resource/Brand,_Bavaria",
+      "prov": "NLP extractors",
+      "hasThumbNailInVideo": null,
+      "hasTime": null,
+      "id": "c0d4a71ca83b9a18a4f7e3d30e0f1ae0"
+    },
+    {
+      "diveEntityType": "Time",
+      "label": "dagen",
+      "startOffset": 214,
+      "endOffset": 219,
+      "type": "DBpedia::Time",
+      "resource": "http://nl.dbpedia.org/resource/Dag",
+      "prov": "NLP extractors",
+      "hasThumbNailInVideo": null,
+      "hasTime": null,
+      "id": "39ee963235d1fdd79eb9634abe2ae299"
+    },
+    {
+      "diveEntityType": "Event",
+      "label": "Brand en bluswerk",
+      "startOffset": 184,
+      "endOffset": 202,
+      "type": null,
+      "resource": null,
+      "prov": "crowdsourcing",
+      "hasTimeStamp": "1924-07-25",
+      "hasLinks": [
+        {
+          "type": "Location",
+          "hasTarget": "c0d4a71ca83b9a18a4f7e3d30e0f1ae0"
+        },
+        {
+          "type": "Time",
+          "hasTarget": "39ee963235d1fdd79eb9634abe2ae299"
+        }
+      ],
+      "id": "fd2ebab5d90e98e57e90058e469a70df"
+    },
+    {
+      "diveEntityType": "Actor",
+      "label": "mannen",
+      "startOffset": 328,
+      "endOffset": 334,
+      "type": "DBpedia::person",
+      "resource": "http://nl.dbpedia.org/resource/Man_(geslacht)",
+      "prov": "NLP extractors",
+      "hasThumbNailInVideo": null,
+      "hasTime": null,
+      "id": "5e6fe00ca35548972703c0c2e3ff659e"
+    },
+    {
+      "diveEntityType": "Event",
+      "label": "mannen redden vaten",
+      "startOffset": 327,
+      "endOffset": 347,
+      "type": null,
+      "resource": null,
+      "prov": "crowdsourcing",
+      "hasTimeStamp": "1924-07-25",
+      "hasLinks": [
+        {
+          "type": "Actor",
+          "hasTarget": "5e6fe00ca35548972703c0c2e3ff659e"
+        }
+      ],
+      "id": "45e317b605d5f48d0fd8961afd76683c"
+    }
+  ],
+  "tags": [
+    "unit"
+  ],
+  "hash": "81092451bf290662a8a7bb0c374ffe45",
+  "activity_id": "activity/createEventSoftwareAgent/239",
+  "user_id": "oana",
+  "updated_at": "2014-09-10 10:05:31",
+  "created_at": "2014-09-10 10:05:31"
+}]
