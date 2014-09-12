@@ -5,7 +5,7 @@ import json
 from xml.dom import minidom, getDOMImplementation
 from pprint import pprint
 
-
+import codecs
 """
 Get stuff from KB
 	
@@ -42,16 +42,15 @@ def run(maxrec, keyword):
                         # get the NE results
                         TPTABASE = "http://tomcat.kbresearch.nl/tpta2/analyse?url="
                         tptaurl= TPTABASE+identifier+":ocr"
-                        print tptaurl
+                        #print tptaurl
                         tptaurlresult = urllib.urlopen(tptaurl)
                         dom2 = minidom.parse(tptaurlresult)
                         entities = dom2.getElementsByTagName('entities')
 
                         # Get the links
                         NERBASE = "http://tomcat.kbresearch.nl/links/ir?id="
-                        nerurl= NERBASE+identifier+":ocr"
+                        nerurl= NERBASE+identifier
                         nerResult = urllib.urlopen(nerurl)
-                        print nerurl
                         data = json.load(nerResult)
 
                         resultElt = dom.createElement("nerResults")
@@ -59,8 +58,8 @@ def run(maxrec, keyword):
                         if len(entities) > 0:
                                 for ne in entities[0].childNodes:
                                         if (ne.nodeType == ne.ELEMENT_NODE):
-                                                netype = ne.nodeName.encode('utf-8')
-                                                neTerm= ne.firstChild.nodeValue.encode('utf-8')
+                                                netype = ne.nodeName
+                                                neTerm= ne.firstChild.nodeValue
                                                 
                                                 elt = dom.createElement("nerResult")
                                                 txt = dom.createTextNode(neTerm)
@@ -72,15 +71,15 @@ def run(maxrec, keyword):
                                                 if 'links' in data:
                                                         for link in data['links']:
                                                                 try:
-                                                                        relation = link['relation']
-                                                                        linktype =  link['linkType']
+                                                                        if (link['name']==neTerm):
+                                                                                relation = link['relation']
+                                                                                linktype =  link['linkType']
                                                                 except KeyError, e:
                                                                         print "Key error reason: %s" %str(e)
                                                 elt.setAttribute("relation", relation)
                                                 elt.setAttribute("linkType", linktype)
                                                 resultElt.appendChild(elt)
                         node.parentNode.appendChild(resultElt)
-                                                      
                                        
                         '''
                         NERBASE = "http://tomcat.kbresearch.nl/links/ir?id="
@@ -116,14 +115,15 @@ def getRecordsForKeywords(n, keywordFile):
                 dom = run(n, keyword)
                 for record in dom.getElementsByTagNameNS(SRW, 'record'):
                         doc.firstChild.appendChild(record)
-        print "Done" 
-        return doc.toxml() 
+        print "Done"
+        #print doc.toxml('utf-8')
+        return doc.toxml('utf-8')
                 
 
 
 def saveToFile(fileName, string):
         f = open(fileName,'w')
-        f.write(string.encode('utf-8'))
+        f.write(string)
         f.close()
 
 
@@ -131,8 +131,9 @@ def saveToFile(fileName, string):
 
 ### gogo ###
 
-result = getRecordsForKeywords(20, "keywords_videos_sm.txt")        
+result = getRecordsForKeywords(20, "keywords_videos.txt")        
 saveToFile("result20.xml", result)
+print result
 
 #result = run(MAXREC,DEFKEYWORD).toxml()
 #saveToFile("result"+ KEYWORD + str(MAXREC) + ".xml", result)

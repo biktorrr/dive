@@ -55,27 +55,44 @@ def getContent(fileName):
       g.add((ANEVURI, DIVE.prov, Literal("assumed event from bulletin")))                 
 
       
-      # link other entities TODO: type???
+      # link other entities
       for entity in node.getElementsByTagName('nerResult'):
          content = entity.firstChild.nodeValue
-         EURI = URIRef(DIVEStr + "entity/" + urllib.quote_plus(content))
-         g.add((EURI, RDF.type, DIVE.Entity)) #TODO: type???
+         try:
+            EURI = URIRef(DIVEStr + "entity/" + urllib.quote_plus(content))
 
-         g.add((EURI, RDFS.label, Literal(content ,lang="nl")))
-         g.add((EURI, DIVE.depictedBy, MOURI))
+            # Give entity type
+            rdftype = entity.getAttribute("neType")
+            if rdftype == "organisation":
+               g.add((EURI, RDF.type, SEM.Actor))
+            elif rdftype == "location":
+                g.add((EURI, RDF.type, SEM.Place))
+            elif rdftype == "person":
+                g.add((EURI, RDF.type, SEM.Person))
+            elif rdftype == "other":
+                g.add((EURI, RDF.type, DIVE.Entity))
+            else :
+                g.add((EURI, RDF.type, DIVE.Entity))
 
-         if(entity.hasAttribute("relation")):
-            g.add((EURI, DIVE.dbpediaResource, Literal(entity.getAttribute("relation"))))
-            g.add((EURI, DIVE.hasExternalLink, Literal(entity.getAttribute("relation"))))
+            #g.add((EURI, RDF.type, DIVE.Entity)) 
 
-         g.add((EURI, DIVE.relatedEvent, EVURI))
-  
-         #Annotation triples
-         ANURI = URIRef(DIVEStr + "annotation/" +  (urllib.quote_plus(uri.split("urn=")[1]+"-"+ content )))
-         g.add((ANURI, RDF.type, OA.Annotation))
-         g.add((ANURI, OA.hasBody, EURI))
-         g.add((ANURI, OA.hasTarget, MOURI))
-         g.add((ANURI, DIVE.prov, Literal("KB NER")))
+            g.add((EURI, RDFS.label, Literal(content ,lang="nl")))
+            g.add((EURI, DIVE.depictedBy, MOURI))
+
+            if(entity.hasAttribute("relation")):
+               g.add((EURI, DIVE.dbpediaResource, Literal(entity.getAttribute("relation"))))
+               g.add((EURI, DIVE.hasExternalLink, Literal(entity.getAttribute("relation"))))
+
+            g.add((EURI, DIVE.relatedEvent, EVURI))
+     
+            #Annotation triples
+            ANURI = URIRef(DIVEStr + "annotation/" +  (urllib.quote_plus(uri.split("urn=")[1]+"-"+ content )))
+            g.add((ANURI, RDF.type, OA.Annotation))
+            g.add((ANURI, OA.hasBody, EURI))
+            g.add((ANURI, OA.hasTarget, MOURI))
+            g.add((ANURI, DIVE.prov, Literal("KB NER")))
+         except KeyError, e:
+            print e
    return g
       
      
@@ -86,5 +103,6 @@ fn = "result20.xml"
 g = getContent(fn)
 print "\ndone. saving..."
 
-of = "C:/Users/vdboer/git/divedata/kb_enriched.ttl"
+of = "C:/Users/victor/git/divedata/kb_enriched.ttl"
+#of = "C:/Users/vdboer/git/divedata/kb_enriched.ttl"
 g.serialize(of, format='turtle') 
