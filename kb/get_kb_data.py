@@ -39,17 +39,49 @@ def run(maxrec, keyword):
                         identifier = node.firstChild.nodeValue
                       
 
-                        # get the types TODO: doesn t work
+                        # get the NE results
                         TPTABASE = "http://tomcat.kbresearch.nl/tpta2/analyse?url="
-                        tptaurl= TPTABASE+identifier
+                        tptaurl= TPTABASE+identifier+":ocr"
                         print tptaurl
                         tptaurlresult = urllib.urlopen(tptaurl)
                         dom2 = minidom.parse(tptaurlresult)
+                        entities = dom2.getElementsByTagName('entities')
 
-                        entitieslist = dom2.getElementsByTagName('entities')
-                        if len(entitieslist) > 0:
-                                for ne in entitieslist:
-                                        print ne.nodeName + ": "+ ne.firstChild.NodeValue
+                        # Get the links
+                        NERBASE = "http://tomcat.kbresearch.nl/links/ir?id="
+                        nerurl= NERBASE+identifier+":ocr"
+                        nerResult = urllib.urlopen(nerurl)
+                        print nerurl
+                        data = json.load(nerResult)
+
+                        resultElt = dom.createElement("nerResults")
+                        
+                        if len(entities) > 0:
+                                for ne in entities[0].childNodes:
+                                        if (ne.nodeType == ne.ELEMENT_NODE):
+                                                netype = ne.nodeName.encode('utf-8')
+                                                neTerm= ne.firstChild.nodeValue.encode('utf-8')
+                                                
+                                                elt = dom.createElement("nerResult")
+                                                txt = dom.createTextNode(neTerm)
+                                                elt.setAttribute("neType", netype)
+                                                elt.appendChild(txt)
+
+                                                relation = ""
+                                                linktype = ""
+                                                if 'links' in data:
+                                                        for link in data['links']:
+                                                                try:
+                                                                        relation = link['relation']
+                                                                        linktype =  link['linkType']
+                                                                except KeyError, e:
+                                                                        print "Key error reason: %s" %str(e)
+                                                elt.setAttribute("relation", relation)
+                                                elt.setAttribute("linkType", linktype)
+                                                resultElt.appendChild(elt)
+                        node.parentNode.appendChild(resultElt)
+                                                      
+                                       
                         '''
                         NERBASE = "http://tomcat.kbresearch.nl/links/ir?id="
                         nerurl= NERBASE+identifier
@@ -99,7 +131,7 @@ def saveToFile(fileName, string):
 
 ### gogo ###
 
-result = getRecordsForKeywords(20, "keywords_videos.txt")        
+result = getRecordsForKeywords(20, "keywords_videos_sm.txt")        
 saveToFile("result20.xml", result)
 
 #result = run(MAXREC,DEFKEYWORD).toxml()
