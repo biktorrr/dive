@@ -60,25 +60,30 @@ def getContent(fileName):
       for entity in node.getElementsByTagName('nerResult'):
          content = entity.firstChild.nodeValue
          try:
-            EURI = URIRef(DIVEStr + "entity/kb-" + urllib.quote_plus(content))
+            #EURI = URIRef(DIVEStr + "entity/kb-" + urllib.quote_plus(content))
 
             # Give entity type
             rdftype = entity.getAttribute("neType")
             if rdftype == "organisation":
+               EURI = URIRef(DIVEStr + "entity/kb-org-" + urllib.quote_plus(content))
                g.add((EURI, RDF.type, SEM.Actor))
                g.add((EVURI, SEM.hasActor, EURI))
             elif rdftype == "location":
-                g.add((EURI, RDF.type, SEM.Place))
-                g.add((EVURI, SEM.hasPlace, EURI))
+               EURI = URIRef(DIVEStr + "entity/kb-loc-" + urllib.quote_plus(content))
+               g.add((EURI, RDF.type, SEM.Place))
+               g.add((EVURI, SEM.hasPlace, EURI))
             elif rdftype == "person":
-                g.add((EURI, RDF.type, DIVE.Person))
-                g.add((EVURI, SEM.hasActor, EURI))
+               EURI = URIRef(DIVEStr + "entity/kb-per-" + urllib.quote_plus(content))
+               g.add((EURI, RDF.type, DIVE.Person))
+               g.add((EVURI, SEM.hasActor, EURI))
             elif rdftype == "other":
-                g.add((EURI, RDF.type, DIVE.Entity))
-                g.add((EVURI, DIVE.isRelatedTo, EURI))
+               EURI = URIRef(DIVEStr + "entity/kb-oth-" + urllib.quote_plus(content))
+               g.add((EURI, RDF.type, DIVE.Entity))
+               g.add((EVURI, DIVE.isRelatedTo, EURI))
             else :
-                g.add((EURI, RDF.type, DIVE.Entity))
-                g.add((EVURI, DIVE.isRelatedTo, EURI))
+               EURI = URIRef(DIVEStr + "entity/kb-unk-" + urllib.quote_plus(content))
+               g.add((EURI, RDF.type, DIVE.Entity))
+               g.add((EVURI, DIVE.isRelatedTo, EURI))
 
             g.add((EURI, RDFS.label, Literal(content ,lang="nl")))
             g.add((EURI, DIVE.depictedBy, MOURI))
@@ -108,6 +113,6 @@ fn = "result20.xml"
 g = getContent(fn)
 print "\ndone. saving..."
 
-of = "C:/Users/victor/git/divedata/kb_enriched.ttl"
-#of = "C:/Users/vdboer/git/divedata/kb_enriched.ttl"
+#of = "C:/Users/victor/git/divedata/kb_enriched.ttl"
+of = "C:/Users/vdboer/git/divedata/kb_enriched.ttl"
 g.serialize(of, format='turtle') 
