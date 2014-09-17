@@ -104,5 +104,12 @@ fn = "v1.json"
 g = getContent(fn)
 print "\ndone. saving..."
 
-of = "C:/Users/vdboer/git/divedata/oi_enriched.ttl"
-g.serialize(of, format='turtle') 
+of = "oi_enriched1.ttl"
+g.serialize(of, format='turtle')
+
+fn = "oi_oana_data.json"
+g = getContent(fn)
+print "\ndone. saving..."
+
+of = "oi_enriched2.ttl"
+g.serialize(of, format='turtle')

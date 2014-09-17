@@ -1,12 +1,16 @@
 :- module(run_dive,
-	  [ run_kb/0
+	  [ run_oi/0
 	  ]).
 
-user:file_search_path(data,       'C:/Users/vdboer/git/divedata/').
+user:file_search_path(data,       'C:/Users/vdboer/git/dive/data/').
 
 :- use_module(library(semweb/rdf_db)).
+:- use_module(library(semweb/rdf_library)).
+
 
 :- rdf_register_ns(dive,	   'http://purl.org/collections/nl/dive/').
+:- rdf_register_ns(sem,            'http://semanticweb.cs.vu.nl/2009/11/sem/').
+:- rdf_attach_library('C:/Users/vdboer/git/divedata/void.ttl').
 
 :- use_module([ library(xmlrdf/xmlrdf),
 		library(semweb/rdf_cache),
@@ -22,16 +26,18 @@ user:file_search_path(data,       'C:/Users/vdboer/git/divedata/').
 			      ]).
 
 
-run_kb:-
-	rewrite_kb,
-	save_kb.
+load_oi:- rdf_load('C:/Users/vdboer/git/divedata/oi_enriched.ttl',[graph(data)]).
 
-save_kb:-
-	absolute_file_name(data('kb_enriched.ttl'), File,
+run_oi:-
+	load_oi,
+	rewrite_oi,
+	save_oi.
+
+save_oi:-
+	absolute_file_name(data('oi_enriched.ttl'), File,
 			   [ access(write)
 			   ]),
-	rdf_save_turtle(File,[graph(kb)]),
-	absolute_file_name(data('kb_to_oi_links.ttl'), File1,
-			   [ access(write)
-			   ]),
-	rdf_save_turtle(File1,[graph(kblinks)]).
+	rdf_save_turtle(File,[graph(data)]).
+
+clean_all:-
+	rdf_retractall(_,_,_).

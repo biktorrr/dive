@@ -1,7 +1,7 @@
-:- module(rewrite_dive_kb,
-	  [ rewrite_kb/0,
-	    rewrite_kb/1,
-	    rewrite_kb/2,
+:- module(rewrite_dive,
+	  [ rewrite_oi/0,
+	    rewrite_oi/1,
+	    rewrite_oi/2,
 	    list_rules/0
 	  ]).
 :- use_module(library(semweb/rdf_db)).
@@ -15,25 +15,25 @@
 %
 %	Apply all rules on the graph =data=
 
-rewrite_kb :-
-	rdf_rewrite(kb).
+rewrite_oi :-
+	rdf_rewrite(data).
 
 %%	rewrite(+Rule)
 %
 %	Apply the given rule on the graph =data=
 
-rewrite_kb(Rule) :-
-	rdf_rewrite(kb, Rule).
+rewrite_oi(Rule) :-
+	rdf_rewrite(data, Rule).
 
 %%	rewrite(+Graph, +Rule)
 %
 %	Apply the given rule on the given graph.
 
-rewrite_kb(Graph, Rule) :-
+rewrite_oi(Graph, Rule) :-
 	rdf_rewrite(Graph, Rule).
 
 %%	list_rules
-%
+%!
 %	List the available rules to the console.
 
 list_rules :-
@@ -43,26 +43,49 @@ list_rules :-
 	rdf_mapping_rule/5.
 
 
-% if actors with same name: produce link
+% if actors with same name: produce link -> only do within a graph
 
-link_actor
+collapse_actor
 @@
 {S,rdf:type,sem:'Actor'},
 {S1,rdf:type,sem:'Actor'},
 {S,rdfs:label, Lab},
-{S1,rdfs:label, Lab}
-==>
+{S1,rdfs:label, Lab}\
+{S}
+<=>
 S\=S1,
-{S, owl:sameAs, S1} >> kblinks.
+{S1}.
 
+collapse_place
+@@
+{S,rdf:type,sem:'Place'},
+{S1,rdf:type,sem:'Place'},
+{S,rdfs:label, Lab},
+{S1,rdfs:label, Lab}\
+{S}
+<=>
+S\=S1,
+{S1}.
 
-map_to_thesaurus @@
- {P, rdf:type, rdf:'ContentSubject'},
- {_, rdf:contentSubject,P}
- <=>
- true.
-map_to_thesaurus @@
- {P, rdf:type, rdf:'ContentSubject'},
- {_, rdf:contentSubject,P}
- <=>
- true.
+collapse_event
+@@
+{S,rdf:type,sem:'Event'},
+{S1,rdf:type,sem:'Event'},
+{S,rdfs:label, Lab},
+{S1,rdfs:label, Lab}\
+{S}
+<=>
+S\=S1,
+{S1}.
+
+collapse_time
+@@
+{S,rdf:type,sem:'Time'},
+{S1,rdf:type,sem:'Time'},
+{S,rdfs:label, Lab},
+{S1,rdfs:label, Lab}\
+{S}
+<=>
+S\=S1,
+{S1}.
+
