@@ -28,7 +28,7 @@ def getContent(fileName):
    for node in dom.getElementsByTagNameNS(SRW, 'record'):
       print('.'),
       uri = node.getElementsByTagNameNS(DCN,'identifier')[0].firstChild.nodeValue
-      mouristring = DIVEStr + uri.split("urn=")[1]
+      mouristring = DIVEStr + urllib.quote_plus(node.getElementsByTagNameNS(DCN,'title')[0].firstChild.nodeValue)
       
       MOURI = URIRef(mouristring) # media object uri      
       g.add((MOURI, RDF.type, DIVE.MediaObject)) #type
@@ -43,13 +43,15 @@ def getContent(fileName):
       g.add((MOURI, RDFS.label, Literal(node.getElementsByTagNameNS(DCN,'title')[0].firstChild.nodeValue, lang="nl")))
 
       # build one event
-      EVURI = URIRef(DIVEStr + "entity/evt-" + urllib.quote_plus(uri.split("urn=")[1]))
+      evtlabel = node.getElementsByTagNameNS(DCN,'title')[0].firstChild.nodeValue
+      EVURI = URIRef(DIVEStr + "entity/evt-" + urllib.quote_plus(evtlabel))
       g.add((EVURI, RDF.type, SEM.Event))
-      g.add((EVURI, RDFS.label, Literal(node.getElementsByTagNameNS(DCN,'title')[0].firstChild.nodeValue, lang="nl")))
+      g.add((EVURI, RDFS.label, Literal(evtlabel, lang="nl")))
       g.add((EVURI, DIVE.depictedBy, MOURI))
       g.add((EVURI, DIVE.hasTimeStamp, Literal(node.getElementsByTagNameNS(DCN,'date')[0].firstChild.nodeValue)))
+      
      #Annotation triples
-      ANEVURI = URIRef(DIVEStr + "annotation/evt-" + urllib.quote_plus(uri.split("urn=")[1]))
+      ANEVURI = URIRef(DIVEStr + "annotation/evt-" + urllib.quote_plus(evtlabel))
       g.add((ANEVURI, RDF.type, OA.Annotation))
       g.add((ANEVURI, OA.hasBody, EVURI))
       g.add((ANEVURI, OA.hasTarget, MOURI)) 
@@ -60,25 +62,30 @@ def getContent(fileName):
       for entity in node.getElementsByTagName('nerResult'):
          content = entity.firstChild.nodeValue
          try:
-            EURI = URIRef(DIVEStr + "entity/kb-" + urllib.quote_plus(content))
+            #EURI = URIRef(DIVEStr + "entity/kb-" + urllib.quote_plus(content))
 
             # Give entity type
             rdftype = entity.getAttribute("neType")
             if rdftype == "organisation":
+               EURI = URIRef(DIVEStr + "entity/kb-org-" + urllib.quote_plus(content))
                g.add((EURI, RDF.type, SEM.Actor))
                g.add((EVURI, SEM.hasActor, EURI))
             elif rdftype == "location":
-                g.add((EURI, RDF.type, SEM.Place))
-                g.add((EVURI, SEM.hasPlace, EURI))
+               EURI = URIRef(DIVEStr + "entity/kb-loc-" + urllib.quote_plus(content))
+               g.add((EURI, RDF.type, SEM.Place))
+               g.add((EVURI, SEM.hasPlace, EURI))
             elif rdftype == "person":
-                g.add((EURI, RDF.type, DIVE.Person))
-                g.add((EVURI, SEM.hasActor, EURI))
+               EURI = URIRef(DIVEStr + "entity/kb-per-" + urllib.quote_plus(content))
+               g.add((EURI, RDF.type, DIVE.Person))
+               g.add((EVURI, SEM.hasActor, EURI))
             elif rdftype == "other":
-                g.add((EURI, RDF.type, DIVE.Entity))
-                g.add((EVURI, DIVE.isRelatedTo, EURI))
+               EURI = URIRef(DIVEStr + "entity/kb-oth-" + urllib.quote_plus(content))
+               g.add((EURI, RDF.type, DIVE.Entity))
+               g.add((EVURI, DIVE.isRelatedTo, EURI))
             else :
-                g.add((EURI, RDF.type, DIVE.Entity))
-                g.add((EVURI, DIVE.isRelatedTo, EURI))
+               EURI = URIRef(DIVEStr + "entity/kb-unk-" + urllib.quote_plus(content))
+               g.add((EURI, RDF.type, DIVE.Entity))
+               g.add((EVURI, DIVE.isRelatedTo, EURI))
 
             g.add((EURI, RDFS.label, Literal(content ,lang="nl")))
             g.add((EURI, DIVE.depictedBy, MOURI))
@@ -90,7 +97,7 @@ def getContent(fileName):
             g.add((EURI, DIVE.relatedEvent, EVURI))
      
             #Annotation triples
-            ANURI = URIRef(DIVEStr + "annotation/" + (urllib.quote_plus(uri.split("urn=")[1]+"-"+ content )))
+            ANURI = URIRef(DIVEStr + "annotation/" + urllib.quote_plus(evtlabel+"-"+ content ))
             g.add((ANURI, RDF.type, OA.Annotation))
             g.add((ANURI, OA.hasBody, EURI))
             g.add((ANURI, OA.hasTarget, MOURI))
@@ -108,6 +115,6 @@ fn = "result20.xml"
 g = getContent(fn)
 print "\ndone. saving..."
 
-of = "C:/Users/victor/git/divedata/kb_enriched.ttl"
-#of = "C:/Users/vdboer/git/divedata/kb_enriched.ttl"
+#of = "C:/Users/victor/git/divedata/kb_enriched.ttl"
+of = "kb_enriched1.ttl"
 g.serialize(of, format='turtle') 

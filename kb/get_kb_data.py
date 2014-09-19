@@ -131,8 +131,8 @@ def saveToFile(fileName, string):
 
 ### gogo ###
 
-result = getRecordsForKeywords(20, "keywords_videos.txt")        
-saveToFile("result20.xml", result)
+result = getRecordsForKeywords(100, "keywords_videos.txt")        
+saveToFile("result100.xml", result)
 print result
 
 #result = run(MAXREC,DEFKEYWORD).toxml()
