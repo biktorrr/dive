@@ -111,10 +111,10 @@ def getContent(fileName):
    
                        
 
-fn = "result20.xml"
+fn = "result30.xml"
 g = getContent(fn)
 print "\ndone. saving..."
 
 #of = "C:/Users/victor/git/divedata/kb_enriched.ttl"
-of = "kb_enriched1.ttl"
+of = "kb_enriched_more.ttl"
 g.serialize(of, format='turtle') 

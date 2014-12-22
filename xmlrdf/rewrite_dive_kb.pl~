@@ -8,6 +8,7 @@
 :- use_module(library(xmlrdf/rdf_convert_util)).
 :- use_module(library(xmlrdf/cvt_vocabulary)).
 :- use_module(library(xmlrdf/rdf_rewrite)).
+:- use_module(library(http/http_open)).
 
 :- debug(rdf_rewrite).
 
@@ -88,3 +89,22 @@ collapse_time
 <=>
 S\=S1,
 {S1}.
+
+kb_thumbnails
+@@
+{S,dive:placeholder,PL}
+<=>
+kb_thumb(PL,New),
+ {S,dive:placeholder,New}.
+
+
+kb_thumb(PL,New):-
+sub_atom(PL,_,_,_,'http://resolver.kb'),
+ catch(http_open(PL,St,[final_url(U),timeout(2)]),_,fail),
+ atomic_list_concat([
+  'http://imageviewer.kb.nl/ImagingService/imagingService?id=',
+		   U,
+		   '&zoom=0.20&useresolver=false'],
+		  New),
+ close(St),
+ write('.'),flush.
