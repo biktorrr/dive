@@ -1,0 +1,390 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sem: <http://semanticweb.cs.vu.nl/2009/11/sem/> .
+@prefix dive: <http://purl.org/collections/nl/dive/> . 
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: 	<http://www.w3.org/2002/07/owl#> .
+@prefix skos: 	<http://www.w3.org/2004/02/skos/core#> .
+@prefix oa: 	<http://www.w3.org/ns/oa#> .
+
+# this example is based on DIVE-data-NLP+Crowd.txt I got from Oana
+
+# EX 1
+dive:video_huwelijksgeschenk 
+	a dive:video;
+	dive:placeholder "1.jpg";
+	dc:decription "In de glasfabriek Leerdam wordt het glazen servies vervaardigd dat door de Nederlandse regering zal worden aangeboden als huwelijksgeschenk aan prinses Elisabeth en prins Philip van Engeland".
+	
+dive:evt_huwelijksgeschenk
+	a sem:Event;
+	rdfs:label "huwelijksgeschenk";
+	sem:hasActor dive:prinses_Elisabeth;
+	sem:hasActor dive:Nederlandse_regering;
+	sem:hasActor dive:Philip_van_Engeland;
+	sem:hasPlace dive:glasfabriek_Leerdam;
+	sem:hasPlace dive:Leerdam;
+	dive:relatedConcept dive:glazen_servies;
+	dive:depictedBy dive:video_huwelijksgeschenk.
+	
+dive:prinses_Elisabeth
+	a sem:Actor ;	
+	foaf:name "prinses Elisabeth".	
+	
+dive:Philip_van_Engeland
+	a sem:Actor ;	
+	foaf:name "prins Philip van Engeland".
+
+dive:Nederlandse_regering	
+	a sem:Actor ;	
+	foaf:name "Nederlandse regering".
+	
+dive:glasfabriek_Leerdam
+	a sem:Place;
+	rdfs:label "glasfabriek Leerdam".
+	
+dive:Leerdam
+	a sem:Place;
+	rdfs:label "Leerdam".	
+	
+dive:glazen_servies
+	a skos:Concept;
+	skos:prefLabel "Glazen Servies".
+	
+dive:annotation01
+	a oa:Annotation;
+	oa:hasTarget dive:video_huwelijksgeschenk;
+	oa:hasBody dive:evt_huwelijksgeschenk.
+	
+
+	
+	# EX 2
+dive:video_tentoonstelling 
+	a dive:video;
+	dive:placeholder "2.jpg";
+	dc:decription "Tentoonstelling \"Het glas 1940\" in het Stedelijk Museum te Amsterdam. SHOTS: - mensen bekijken glazen voorwerpen in vitrine; - div. tentoongestelde objecten (oa karaf met drinkglas, div. pijpen, schaal, vazen en kandelaar).".
+	
+dive:evt_tentoonstelling
+	a sem:Event;
+	rdfs:label "Tentoonstelling Het glas 1940";
+	sem:hasActor dive:mensen;
+	sem:hasPlace dive:Stedelijk_Museum;
+	sem:hasPlace dive:Amsterdam;
+	sem:hasPlace dive:Stedelijk_Museum_te_Amsterdam;
+	dive:relatedConcept dive:glazen;
+	dive:relatedConcept dive:vitrine;
+	dive:relatedConcept dive:karaf;
+	dive:relatedConcept dive:vazen;
+	dive:relatedConcept dive:kandelaar;
+	dive:depictedBy dive:video_tentoonstelling.
+	
+dive:mensen
+	a sem:Actor ;	
+	foaf:name "mensen".	
+	
+dive:Stedelijk_Museum
+	a sem:Place ;	
+	rdfs:label "Stedelijk Museum".
+
+dive:Amsterdam
+	a sem:Place;
+	rdfs:label "Amsterdam".
+	
+dive:Stedelijk_Museum_te_Amsterdam
+	a sem:Place;
+	rdfs:label "Stedelijk Museum te Amsterdam".	
+	
+dive:glazen
+	a skos:Concept;
+	skos:prefLabel "glazen".
+	
+dive:vitrine
+	a skos:Concept;
+	skos:prefLabel "vitrine".
+	
+dive:karaf
+	a skos:Concept;
+	skos:prefLabel "karaf".
+	
+dive:vazen
+	a skos:Concept;
+	skos:prefLabel "vazen".
+	
+dive:kandelaar
+	a skos:Concept;
+	skos:prefLabel "kandelaar".	
+	
+dive:annotation02
+	a oa:Annotation;
+	oa:hasTarget dive:video_evt_tentoonstelling;
+	oa:hasBody dive:evt_tentoonstelling.
+	
+# EX 3
+dive:video_vliegboten 
+	a dive:video;
+	dive:placeholder "3.jpg";
+	dc:decription "Verslag van de tochten van Catalina-vliegboten van de Marine Luchtvaart Dienst van Biak naar de Wisselmeren. De toestellen verzorgen transport van mensen en goederen naar Nederlandse posten. Luchtopnamen van Sorong.".
+	
+dive:evt_vliegboten
+	a sem:Event;
+	rdfs:label "tochten van Catalina-vliegboten";
+	sem:hasActor dive:Marine_Luchtvaart_Dienst;
+	sem:hasPlace dive:Biak;
+	sem:hasPlace dive:Wisselmeren;
+	sem:hasPlace dive:Sorong;
+	sem:hasPlace dive:Nederlandse;
+	dive:relatedConcept dive:luchtopnamen;
+	dive:depictedBy dive:video_vliegboten.
+	
+dive:Marine_Luchtvaart_Dienst
+	a sem:Actor ;	
+	foaf:name "Marine Luchtvaart Dienst".	
+	
+dive:Biak
+	a sem:Place ;	
+	rdfs:label "Biak".
+
+dive:Wisselmeren
+	a sem:Place;
+	rdfs:label "Wisselmeren".
+	
+dive:Sorong
+	a sem:Place;
+	rdfs:label "Sorong".
+
+dive:Nederlandse
+	a sem:Place;
+	rdfs:label "Nederlandse".	
+	
+dive:luchtopnamen
+	a skos:Concept;
+	skos:prefLabel "luchtopnamen".
+
+dive:annotation03
+	a oa:Annotation;
+	oa:hasTarget dive:video_vliegboten;
+	oa:hasBody dive:evt_vliegboten.
+	
+	
+	
+# EX 4
+dive:vid_tentoonstelling2
+	a dive:video;
+	dive:placeholder "4.jpg";
+	dc:decription "Tentoonstelling van glazen voorwerpen ontworpen door Andries D. Copier in de tuin bij zijn huis te Driebergen ihkv zijn 50-jarig jubileum als glasontwerpen, met oa een dubbelwandige glas, gildeglazen en experimenteel glazen voorwerpen. Verder beelden van Copier en een man die glas blaast in de glasfabriek van Leerdam.".
+	
+dive:evt_tentoonstelling2a
+	a sem:Event;
+	rdfs:label "Tentoonstelling";
+	sem:hasActor dive:Andries_D_Copier;
+	sem:hasActor dive:Copier;
+	sem:hasPlace dive:de_tuin_bij_zijn_huis;
+	sem:hasPlace dive:Driebergen;
+	sem:hasPlace dive:Leerdam;
+	sem:hasPlace dive:glasfabriek;
+	dive:relatedConcept dive:glazen;
+	dive:relatedConcept dive:glas;
+	dive:depictedBy dive:vid_tentoonstelling2.
+
+dive:evt_tentoonstelling2b
+	a sem:Event;
+	rdfs:label "Tentoonstelling van glazen voorwerpen";
+	sem:hasActor dive:Andries_D_Copier;
+	sem:hasActor dive:Copier;
+	sem:hasPlace dive:de_tuin_bij_zijn_huis;
+	sem:hasPlace dive:Driebergen;
+	sem:hasPlace dive:Leerdam;
+	sem:hasPlace dive:glasfabriek;
+	dive:relatedConcept dive:glazen;
+	dive:relatedConcept dive:glas;
+	dive:depictedBy dive:vid_tentoonstelling2.
+	
+dive:evt_tentoonstelling2c
+	a sem:Event;
+	rdfs:label "50-jarig jubileum";
+	sem:hasActor dive:Andries_D_Copier;
+	sem:hasActor dive:Copier;
+	sem:hasPlace dive:de_tuin_bij_zijn_huis;
+	sem:hasPlace dive:Driebergen;
+	sem:hasPlace dive:Leerdam;
+	sem:hasPlace dive:glasfabriek;
+	dive:relatedConcept dive:glazen;
+	dive:relatedConcept dive:glas;
+	dive:depictedBy dive:vid_tentoonstelling2.
+	
+dive:evt_tentoonstelling2d
+	a sem:Event;
+	rdfs:label "die glas blaast";
+	sem:hasActor dive:Andries_D_Copier;
+	sem:hasActor dive:Copier;
+	sem:hasPlace dive:de_tuin_bij_zijn_huis;
+	sem:hasPlace dive:Driebergen;
+	sem:hasPlace dive:Leerdam;
+	sem:hasPlace dive:glasfabriek;
+	dive:relatedConcept dive:glazen;
+	dive:relatedConcept dive:glas;
+	dive:depictedBy dive:vid_tentoonstelling2.
+	
+dive:Andries_D_Copier
+	a sem:Actor ;	
+	foaf:name "Andries D. Copier".	
+	
+dive:Copier
+	a sem:Actor ;	
+	foaf:name "Copier".	
+	
+dive:de_tuin_bij_zijn_huis
+	a sem:Place ;	
+	rdfs:label "de tuin bij zijn huis".
+
+dive:Driebergen
+	a sem:Place;
+	rdfs:label "Driebergen".
+	
+dive:Leerdam
+	a sem:Place;
+	rdfs:label "Leerdam".
+
+dive:glasfabriek
+	a sem:Place;
+	rdfs:label "glasfabriek".	
+	
+dive:glas
+	a skos:Concept;
+	skos:prefLabel "glas".
+	
+dive:annotation04a
+	a oa:Annotation;
+	oa:hasTarget dive:vid_tentoonstelling2;
+	oa:hasBody dive:evt_tentoonstelling2a.	
+	
+dive:annotation04b
+	a oa:Annotation;
+	oa:hasTarget dive:vid_tentoonstelling2;
+	oa:hasBody dive:evt_tentoonstelling2b.	
+
+dive:annotation04c
+	a oa:Annotation;
+	oa:hasTarget dive:vid_tentoonstelling2;
+	oa:hasBody dive:evt_tentoonstelling2c.	
+	
+dive:annotation04d
+	a oa:Annotation;
+	oa:hasTarget dive:vid_tentoonstelling2;
+	oa:hasBody dive:evt_tentoonstelling2d.		
+	
+	
+	
+# EX 5
+dive:vid_example5
+	a dive:video;
+	dive:placeholder "5.jpg";
+	dc:decription "De in Nederland tijdens de Tweede Wereldoorlog geëxecuteerde Arubaanse verzetsstrijder Boy Ecury is door het Nederlandse marineschip 'Van Speijk' overgebracht naar Aruba. Daar wordt hij met militaire eer begraven op het kerkhof van Oranjestad. Veel publieke belangstelling als de lange begrafenisstoet, met oa militairen en geestelijken, door de straten naar het kerkhof trekt. Dragers laten de kist aan touwen in de grafkuil neer. 00:53 de gouverneur van Curaçao, P.A. Kasteel.".
+	
+dive:evt_militaire_eer
+	a sem:Event;
+	rdfs:label "militaire eer begraven";
+	sem:hasActor dive:vanSpeijk;
+	sem:hasActor dive:Ecury;
+	sem:hasActor dive:gouv_curacao;
+	sem:hasActor dive:pakasteel;
+	sem:hasActor dive:militairen;
+	sem:hasActor dive:geestelijken;
+	sem:hasActor dive:boyecury;
+	sem:hasActor dive:dragers;
+	sem:hasPlace dive:kerkhofOranjestad;
+	sem:hasPlace dive:Aruba;
+	sem:hasPlace dive:Oranjestad;
+	sem:hasPlace dive:Nederland;
+	sem:hasPlace dive:stratennaarkerkhof;
+	sem:hasTime dive:tijdenswo2;
+	sem:relatedConcept dive:marineschip;
+	dive:relatedEvent dive:evt_wo2;
+	dive:depictedBy dive:vid_example5.
+
+dive:evt_wo2
+	a sem:Event;
+	rdfs:label "Tweede Wereldoorlog";
+	sem:hasActor dive:vanSpeijk;
+	sem:hasActor dive:Ecury;
+	sem:hasActor dive:gouv_curacao;
+	sem:hasActor dive:pakasteel;
+	sem:hasActor dive:militairen;
+	sem:hasActor dive:geestelijken;
+	sem:hasActor dive:boyecury;
+	sem:hasActor dive:dragers;
+	sem:hasPlace dive:kerkhofOranjestad;
+	sem:hasPlace dive:Aruba;
+	sem:hasPlace dive:Oranjestad;
+	sem:hasPlace dive:Nederland;
+	sem:hasPlace dive:stratennaarkerkhof;
+	sem:hasTime dive:tijdenswo2; # this we get from the data
+	sem:hasBeginTimeStamp "1939-09-01"; # this would be data we would get from an enrichment
+	sem:hasEndTimeStamp "1945-09-02";
+	dive:relatedConcept dive:marineschip;
+	dive:relatedEvent dive:evt_militaire_eer;
+	dive:depictedBy dive:vid_example5.
+
+dive:tijdenswo2
+		a sem:Time;
+		rdfs:label "tijdens de Tweede Wereldoorlog".
+		
+	
+dive:vanSpeijk
+	a sem:Actor ;	
+	foaf:name "Nederlandse marineschip 'Van Speijk'".	
+
+dive:Ecury
+	a sem:Actor ;	
+	foaf:name "Arubaanse verzetsstrijder Boy Ecury".
+dive:gouv_curacao
+	a sem:Actor ;	
+	foaf:name "gouverneur van Curaçao".
+dive:pakasteel
+	a sem:Actor ;	
+	foaf:name "P.A. Kasteel".
+dive:militairen
+	a sem:Actor ;	
+	foaf:name "militairen".
+dive:geestelijken
+	a sem:Actor ;	
+	foaf:name "geestelijken".
+dive:boyecury
+	a sem:Actor ;	
+	foaf:name "Boy Ecury".
+dive:dragers
+	a sem:Actor ;	
+	foaf:name "Dragers".
+	
+dive:kerkhofOranjestad
+	a sem:Place ;	
+	rdfs:label "kerkhof van Oranjestad".	
+dive:Aruba
+	a sem:Place ;	
+	rdfs:label "Aruba".	
+	
+dive:Oranjestad
+	a sem:Place ;	
+	rdfs:label "Oranjestad".	
+	
+dive:Nederland
+	a sem:Place ;	
+	rdfs:label "Nederland".	
+	
+dive:stratennaarkerkhof
+	a sem:Place ;	
+	rdfs:label "straten naar het kerkhof".
+
+dive:marineschip
+	a skos:Concept;
+	skos:prefLabel "marineschip".
+	
+dive:annotation05a
+	a oa:Annotation;
+	oa:hasTarget dive:vid_example5;
+	oa:hasBody dive:evt_militaire_eer.	
+	
+dive:annotation05b
+	a oa:Annotation;
+	oa:hasTarget dive:vid_example5;
+	oa:hasBody dive:evt_wo2.	

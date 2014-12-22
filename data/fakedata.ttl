@@ -1,0 +1,49 @@
+@prefix     rdfs: 	<http://www.w3.org/2000/01/rdf-schema#> .
+@prefix     rdf: 	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix     owl: 	<http://www.w3.org/2002/07/owl#> .
+@prefix   	dive: 	<http://purl.org/collections/nl/dive/> .
+
+@prefix 	sem: 	<http://semanticweb.cs.vu.nl/2009/11/sem/>.
+@prefix   	oa: 	<http://www.w3.org/ns/oa#>.
+@prefix     skos: 	<http://www.w3.org/2004/02/skos/core#> .
+@prefix     foaf: 	<http://xmlns.com/foaf/0.1/> .
+@prefix     dc: 	<http://purl.org/dc/terms/> .
+@prefix 	prov: 	<http://www.w3.org/ns/prov#> .
+
+
+##########################################################################
+#                           Data										 #
+##########################################################################
+
+dive:video_object1 
+	a dive:Object;
+	dive:oi_id "oai:openimages.eu:15111";
+	dc:description "Voor de Anti-Hongeractie 10 x 10 verkopen kinderen Bijlmermeertjes, pakketjes met koek, aan burgemeester G. van Hall op de Dam te Amsterdam, waar ook een tram met reclame voor de actie rondrijdt. In Nieuwendam houden kinderen een schoonmaakactie en ze kunnen deelnemen aan sportwedstrijden. In Arnhem geeft staatssecretaris Norbert Schmelzer de aftrap voor een voetbalwedstrijd. Het geld dat met deze activiteiten wordt binnengehaald, komt ten goede aan de actie. Verder beelden van hongerende kinderen in derde-wereldlanden.";
+	dive:has_event dive:event1; # has extracted event? do we want to do confidence and provenance? blank node or uri?
+	dive:has_event dive:event2;
+	rdfs:label "My object".
+
+dive:event1
+	a sem:Event;
+	sem:hasActor dive:actor1;
+	sem:hasPlace dive:place1.
+	
+dive:actor1
+	a sem:Actor;
+	rdfs:label "burgemeester G. van Hall";
+	foaf:name "G. van Hall".
+
+dive:place1		
+	a sem:Place;
+	rdfs:label "Dam te Amsterdam";
+	rdfs:label "Amsterdam";
+	owl:sameAs <http://sws.geonames.org/2759794/>.
+
+dive:event2
+	a sem:Event;
+	sem:hasActor dive:actor1;
+	sem:hasPlace dive:place1.
+
+dive:place2		
+	a sem:Place;
+	rdfs:label "Nieuwendam".

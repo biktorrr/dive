@@ -1,0 +1,225 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sem: <http://semanticweb.cs.vu.nl/2009/11/sem/> .
+@prefix dive: <http://purl.org/collections/nl/dive/> . 
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix     owl: 	<http://www.w3.org/2002/07/owl#> .
+@prefix     skos: 	<http://www.w3.org/2004/02/skos/core#> .
+@prefix     oa: 	<http://www.w3.org/ns/oa#> .
+
+# this example is based on dive-data-example.txt I got from werner
+# In this version I use SEM relations
+
+# what namespace for dive?
+# what vocs to reuse (foaf, dc)
+ # for image links: dive edm?, agora?
+# what URI strategy (UIDs or name, class types?)
+# related properties: 1-way or 2-way? reified or not, subproperties or not?
+
+
+dive:345346
+	a dive:Person ;	
+	dc:identifier "345346";
+	foaf:name "Ingenieur Lely"; #use voc-specific properties here or go with rdfs:label
+	owl:sameAs <http://viaf.org/viaf/43023502>;
+	dc:description "Lely deed veel met Water";
+	dive:depictedBy dive:23438.
+
+dive:24634
+	a sem:Person ;	
+	dc:identifier "345346";
+	foaf:name "Koningin Wilhelmina";
+	dc:description "Wilhelmina hield ook van water";
+	owl:sameAs <http://viaf.org/viaf/261774037>;
+	dive:depictedBy dive:34534.
+	
+dive:234634
+	a dive:Object ;	 # not in SEM. Use DIVE for this? or is it a Concept?
+	dc:identifier "234634";
+	rdfs:label "Drijfkraan";
+	dc:description "Die ene specifieke kraan die toen op het water dreef";
+	dive:depictedBy dive:2523.
+	
+dive:343534
+	a sem:Place ;	
+	dc:identifier "343534";
+	rdfs:label "Zuiderzee";
+	dc:description "groot water";
+	owl:sameAs <http://sws.geonames.org/2753361>;
+	dive:depictedBy dive:23455.	
+	
+dive:3463463
+	a skos:Concept ;	
+	dc:identifier "3463463";
+	skos:prefLabel "Inpolderen";
+	dc:description "Wegpompen van water";
+	dive:depictedBy dive:745.	
+
+dive:758
+	a sem:Event ;	
+	dc:identifier "758";
+	dc:description "Water water water";
+	rdfs:label "Storm op afsluitdijk";
+	dive:relatedEvent [	
+		rdf:value dive:12345;	
+		sem:RoleType [ rdfs:label "some relation to"];
+		];		
+	dive:depictedBy dive:7455.	
+
+dive:96456
+	a sem:Event ;	
+	dc:identifier "96456";
+	dc:description "Het laatste stukje water werd overbrugd";
+	rdfs:label "De aansluiting";
+	
+	dive:depictedBy dive:236622.	
+
+
+dive:12345
+	a sem:Event ;	
+	dc:identifier "12345";
+	rdfs:label "Opening afsluitdijk";
+	dc:description "De afsluitdijk heef links en rechts water en die werd nu geopend";
+	dive:depictedBy dive:23438;
+	sem:hasActor [	
+		a sem:Role;		
+		rdf:value dive:345346;	#here we need to make sem:Role bn because of reification
+		sem:RoleType [rdfs:label "Designer of"]; # actually, lely designed the object, not the event
+		sem:RoleType [rdfs:label "Participated in"] # are these arbitrary values or enumerable? In any case, we model using BN Sem RoleTypes and labels
+		];		
+	sem:hasActor [	
+		a sem:Role;
+		rdf:value dive:24634;	
+		sem:RoleType [rdfs:label "Gave Build Permission"]; 
+		sem:RoleType [rdfs:label "Gid inaugurate"]# are these arbitrary values or enumerable? first looked like the latter. Later decided on the former
+		];	
+	dive:relatedConcept [	
+		rdf:value dive:234634;	
+		sem:RoleType [rdfs:label "is used to build"]; 
+		];		
+	sem:hasPlace [	
+		rdf:value dive:343534;	
+		sem:RoleType [rdfs:label "contains"]; # not really
+		];			
+	dive:relatedConcept [	#sem does not have links to objects, so  we use a dive property here, can all things have related concepts etc. or only events?
+		rdf:value dive:3463463;	
+		sem:RoleType [rdfs:label "was a technique used"]; 
+		];		
+	dive:relatedEvent [		#sem only has subEvent relation , so  we use a dive property here
+		rdf:value dive:3463463;	
+		sem:RoleType [rdfs:label "was a reason to build"];
+		sem:RoleType [rdfs:label "was withstood by"];
+		];	
+	dive:relatedEvent [	
+		rdf:value dive:96456;	
+		sem:RoleType [ rdfs:label "finished"];
+		];		
+	dive:hasSource [
+		dive:sourceType "Delpher";
+		rdfs:label "NRC handelsblad, 14 mei 1934, pagina 23, kolom 14";
+		dive:url <http://www.delpher.nl/item/2993>];
+	dive:hasExternalLink [
+		rdfs:label "Wikipedia on afsluitdijk";
+		dive:url <http://nl.wikipedia.org/wiki/Afsluitdijk>]	.
+		# do these need to be two different properties?
+		
+		
+
+# Dive image links
+	
+dive:23438
+	a dive:Image ;
+	dive:placeholder <http://image.com/lely.jpg>; 
+	dive:source <http://image.com/lely.jpg>.
+	
+dive:34534
+	a dive:Image ;
+	dive:placeholder <http://image.com/wilhelmina.jpg>; 
+	dive:source <http://image.com/wilhelmina.jpg>.
+	
+dive:2523
+	a dive:Video ;
+	dive:placeholder <http://image.com/drijfkraan.jpg>; 
+	dive:source <http://video.com/drijfkraan/mp4>.
+	
+dive:23455
+	a dive:Image ;
+	dive:placeholder <http://image.com/zuiderzee.jpg>; 
+	dive:source <http://image.com/zuiderzee.jpg>.
+
+dive:745
+	a dive:Video ;
+	dive:placeholder <http://image.com/inpolderen.jpg>; 
+	dive:source <http://video.com/inpolderen.mp4>.
+
+dive:7455
+	a dive:Video ;
+	dive:placeholder <http://image.com/storm.jpg>; 
+	dive:source <http://video.com/storm.mp4>.
+
+dive:236622
+	a dive:Image ;
+	dive:placeholder <http://bigimage.com/aansluiting.jpg>; 
+	dive:source <http://bigimage.com/aansluiting.jpg>.
+
+dive:23439
+	a dive:Image ;
+	dive:placeholder <http://image.com/opening.jpg>; 
+	dive:source <http://image.com/opening.jpg>.	
+	
+	
+# Open Annotation links
+
+dive:annotation23438
+	a oa:Annotation;
+	oa:hasTarget dive:23438;
+	oa:hasBody dive:12345.
+	
+dive:annotation23438a
+	a oa:Annotation;
+	oa:hasTarget dive:23438;
+	oa:hasBody dive:345346.
+	
+dive:annotation34534
+	a oa:Annotation;
+	oa:hasTarget dive:34534;
+	oa:hasBody dive:24634.
+	
+dive:annotation2523
+	a oa:Annotation;
+	oa:hasTarget dive:2523;
+	oa:hasBody dive:234634.
+	
+dive:annotation23455
+	a oa:Annotation;
+	oa:hasTarget dive:23455;
+	oa:hasBody dive:343534.	
+	
+dive:annotation745
+	a oa:Annotation;
+	oa:hasTarget dive:745;
+	oa:hasBody dive:3463463.	
+
+dive:annotation7455
+	a oa:Annotation;
+	oa:hasTarget dive:7455;
+	oa:hasBody dive:758.	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
