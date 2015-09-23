@@ -1,5 +1,15 @@
 #!/usr/bin/python
 
+"""JSON to RDF conversion tool
+Converts a JSON file from CrowdTruth to an RDF file for DIVE.
+Some example input files are "v1.json" and "oi_oana_data.json".
+
+Usage:
+    json2Rdf <input> <output>
+"""
+
+from docopt import docopt
+import sys
 import json
 import rdflib
 from rdflib import Graph, Literal, BNode, Namespace, RDF, URIRef
@@ -22,7 +32,7 @@ def getContent(fileName):
    for record in data:
       print('.'),
       MOURI = URIRef(DIVEStr + record["hash"]) # media object uri (hash or something nicer?)
-      
+
       g.add((MOURI, RDF.type, DIVE.MediaObject)) #type
       g.add((MOURI, DCTERMS.identifier, Literal(record["title"])))   # id at OI
       g.add((MOURI, DIVE.source, URIRef(record["metadataContent"]["metadata"]["online_url"])))   # actual video URI
@@ -50,7 +60,7 @@ def getContent(fileName):
          else :
              g.add((EURI, RDF.type, DIVE.Entity))
 
-             
+
          g.add((EURI, RDFS.label, Literal(entity["label"],lang="nl")))
          g.add((EURI, DIVE.depictedBy, MOURI))
 
@@ -58,7 +68,7 @@ def getContent(fileName):
             g.add((EURI, DIVE.dbpediaType, Literal(entity["type"])))
             g.add((EURI, DIVE.dbpediaResource, Literal(entity["resource"])))
             g.add((EURI, DIVE.hasExternalLink, Literal(entity["resource"])))
-                   
+
          if("hasTimeStamp" in entity):
             g.add((EURI, DIVE.hasTimeStamp, Literal(entity["hasTimeStamp"])))
 
@@ -83,33 +93,24 @@ def getContent(fileName):
                   g.add((EURI, DIVE.relatedEvent, TOURI))
                else:
                   g.add((EURI, DIVE.isRelatedTo, TOURI))
-           
-            
+
          #Annotation triples
          ANURI = URIRef(DIVEStr + "annotation/" + entity["id"])
          g.add((ANURI, RDF.type, OA.Annotation))
          g.add((ANURI, OA.hasBody, EURI))
          g.add((ANURI, OA.hasTarget, MOURI))
-         g.add((ANURI, DIVE.startoffset, Literal(entity["startOffset"])))      
-         g.add((ANURI, DIVE.endOffset, Literal(entity["endOffset"])))      
+         g.add((ANURI, DIVE.startoffset, Literal(entity["startOffset"])))
+         g.add((ANURI, DIVE.endOffset, Literal(entity["endOffset"])))
          g.add((ANURI, DIVE.prov, Literal(entity["prov"])))
-         
+
    return g
-     
-   
-                       
 
-#fn = "oneexample.json"
-fn = "v1.json"
-g = getContent(fn)
-print "\ndone. saving..."
+def convert(inputFileName, outputFileName):
+    print "Loading graph from " + inputFileName
+    g = getContent(inputFileName)
+    print "\ndone. Saving to " + outputFileName + "..."
+    g.serialize(outputFileName, format='turtle')
 
-of = "oi_enriched1.ttl"
-g.serialize(of, format='turtle')
-
-fn = "oi_oana_data.json"
-g = getContent(fn)
-print "\ndone. saving..."
-
-of = "oi_enriched2.ttl"
-g.serialize(of, format='turtle')
+if __name__ == '__main__':
+    args = docopt(__doc__, sys.argv[1:])
+    convert(args['<input>'], args['<output>'])
