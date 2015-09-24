@@ -1,0 +1,132 @@
+{
+  // Json schema for ct export before converted to RDF for use in DIVE.
+  // Author: Christiaan Meijer, Netherlands eScience Center
+  "$schema":"http://dev.crowdtruth.org/api/v1",
+  "id": "http://dev.crowdtruth.org/api/v1",
+  "type" :"array",
+  "items" : {
+    "type" : "object",
+    "properties" : {
+      "_id" : {"type" : "string"},
+      "activity_id" : {"type" : "string"},
+      "created_at" : {"type" : "string"}, // format:date-time doesn't work cause missing T
+      "documentType" : {"type" : "string"},
+      "domain" : {"type" : "string"},
+      "project" : {"type" : "string"},
+      "source" : {"type" : "string"},
+      "format" : {"type" : "string"}, // might actually be enum I think
+      "hasEnrichment" : {
+        "type" : "array",
+        "items" : {
+          "type" : "object",
+          "properties" : {
+            "diveEntityType" : {
+              "type" : "string",
+              "enum" : ["Location", "Actor", "Concept", "Event", "Time"]
+            },
+            "label" : {"type" : "string"},
+            "startoffset" : {"type" : "number"},
+            "endoffset" : {"type" : "number"},
+            "description" : {}, // string or null
+            "type" : {}, // string or null
+            "resource" : {}, // string or null
+            "prov" : {"type" : "string"},
+            "hasTime" : {"type" : "string"},
+            "hasThumbNailInVideo" : {"type" : "string"},
+            "id" : {"type" : "string"},
+            "hasLinks" : {
+              "type" : "array",
+              "items" : {
+                "type" : "object",
+                "properties" :{
+                  "hasTarget" : {"type" : "string"},
+                  "type" : {
+                    "type" : "string",
+                    "enum" : ["Location", "Actor", "Concept", "Time"]
+                  }
+                },
+                "required" : ["type", "hasTarget"]
+              }
+            }
+          },
+          "required" : ["diveEntityType", "label", "type", "resource", "prov", "id"]
+        },
+      },
+      "hasKeyFrames" : {
+        "type": "array",
+        "items" : {
+          "type" : "object",
+          "properties" : {
+            "timestamp" : {"type" : "string"}
+          },
+          "required" : ["timestamp"] // Not sure, might be missing. In that case, use 0.
+        }
+      },
+      "metadata" : {
+        "type": "object",
+        "properties" : {
+          "title" : {
+            "type" : "object",
+            "properties" : {
+              "nl" : {"type" : "string"},
+              "en" : {"type" : "string"}
+            },
+            "required" : ["nl", "en"]
+          },
+          "spatial" : {
+            "type" : "object",
+            "properties" : {
+              "nl" : {"type" : "string"},
+              "en" : {"type" : "string"}
+            },
+            "required" : ["nl", "en"]
+          },
+          "creator" : {
+            "type" : "object",
+            "properties" : {
+              "nl" : {"type" : "string"},
+              "en" : {"type" : "string"}
+            },
+            "required" : ["nl", "en"]
+          },
+          "subject" : {
+            "type" : "object",
+            "properties" : {
+              "nl" : {"type" : "string"},
+              "en" : {"type" : "string"}
+            },
+            "required" : ["nl", "en"]
+          },
+          "people" : {
+            "type" : "object",
+            "properties" : {
+              "nl" : {"type" : "string"},
+              "en" : {"type" : "string"}
+            },
+            "required" : ["nl", "en"]
+          },
+          "abstract" : {
+            "type" : "object",
+            "properties" : {
+              "nl" : {"type" : "string"},
+              "en" : {"type" : "string"}
+            },
+            "required" : ["nl", "en"]
+          },
+          "date" : {"type" : "string"},
+          "extent" : {"type" : "string"},
+          "online_url" : {"type" : "string"},
+          "medium" : {
+            "type": "object",
+            "properties" : {
+              "thumbnail" : {"type" : "string"}
+            },
+            "required" : ["title", "spatial", "abstract", "thumbnail"]
+          }
+        },
+        "required" : ["date", "extent", "online_url",]
+      }
+    },
+    "required" : ["_id", "activity_id", "format", "source", "project", "created_at", "documentType", "domain", "hasEnrichment"]
+  }
+}
