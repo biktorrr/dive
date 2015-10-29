@@ -1,0 +1,32 @@
+# SOME USEFUL PROLOG COMMANDS
+
+# command to make a subset based on am:productionDateStart
+
+
+
+
+# SAVING STUFF AS SKOS, FOR EASIER ALIGNMENT
+
+# ACTOR command to export all Actor entities from oi_enriched to a separate named graph called oipers, replace Actor by another type
+
+ forall((rdf(A,rdf:type,sem:'Actor','http://purl.org/collections/nl/dive/oi_enriched.ttl'),rdf(A,rdfs:label,Lab)),(rdf_assert(A,rdf:type,skos:'Concept',oipers),rdf_assert(A,skos:inScheme,schemeoipers,oipers),rdf_assert(A,skos:prefLabel,Lab,oipers))).
+
+# add conceptscheme
+ rdf_assert(oipers,rdf:type, skos:'ConceptScheme',oipers).
+ rdf_assert(oipers,rdfs:label,  literal('temporary scheme for persons'),oipers).
+
+
+# ONE ALTERNATIVE: PLACE command to export all Place entities from oi_enriched to a separate named graph called oiplace, replace Actor by another type
+ forall((rdf(A,rdf:type,sem:'Place','http://purl.org/collections/nl/dive/oi_enriched.ttl'),rdf(A,rdfs:label,Lab)),(rdf_assert(A,rdf:type,skos:'Concept',oiplace),rdf_assert(A,skos:inScheme,schemeoiplace,oiplace),rdf_assert(A,skos:prefLabel,Lab,oiplace))).
+
+# add conceptscheme
+ rdf_assert(oiplace,rdf:type, skos:'ConceptScheme',oiplace).
+ rdf_assert(oiplace,rdfs:label,  literal('temporary scheme for places'),oiplace).
+
+
+# ONE ALTERNATIVE: PLACE command to export all Place entities from oi_enriched to a separate named graph called oirest, replace Actor by another type
+ forall((rdf(A,rdf:type,sem:'Place','http://purl.org/collections/nl/dive/oi_enriched.ttl'),rdf(A,rdfs:label,Lab)),(rdf_assert(A,rdf:type,skos:'Concept',oirest),rdf_assert(A,skos:inScheme,schemeoirest,oirest),rdf_assert(A,skos:prefLabel,Lab,oirest))).
+
+# add conceptscheme
+ rdf_assert(oirest,rdf:type, skos:'ConceptScheme',oirest).
+ rdf_assert(oirest,rdfs:label, literal('temporary scheme for rest'),oirest).
