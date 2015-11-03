@@ -1,6 +1,16 @@
 # SOME USEFUL PROLOG COMMANDS
 
-# command to make a subset based on am:productionDateStart
+
+
+# COMMANDS TO MAKE AN AM SUBSET BASED ON AM:PRODUCTIONDATESTART
+
+# Get all Proxy URIS in AM of things with a produvtion date in the 1980s and assert as a list (for later reference)
+ findall(A,(rdf(A,am:productionDateStart,literal(B)),sub_atom(B,0,_,_,'198')),L),assert(l4(L)).
+
+# now, for every resource in that list, copy all triples to a new graph
+ thelist(L),forall((member(A,L),rdf(A,B,C)),rdf_assert(A,B,C,amselection)).
+ 
+# and also copy the edm:object (image) from the aggregation to the proxy itself (bit of a hack). After that, you can export the graph as ttl and save. thelist(L),forall((member(A,L),rdf(A,ore:proxyIn,C),rdf(C,edm:object,E)),rdf_assert(A,edm:object,E,amselection)).
 
 
 
