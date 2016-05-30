@@ -37,7 +37,8 @@ def getContent(fileName):
       g.add((MOURI, DIVE.placeholder, URIRef(uri)))   # placeholder img URI
 
       g.add((MOURI, DIVE.datestamp, Literal(node.getElementsByTagNameNS(DCN,'date')[0].firstChild.nodeValue))) #date of bulletin
-      g.add((MOURI, DCTERMS.description, Literal(node.getElementsByTagName('content')[0].firstChild.nodeValue, lang="nl")))
+	  modescription = node.getElementsByTagName('content')[0].firstChild.nodeValue
+      g.add((MOURI, DCTERMS.description, Literal(modescription, lang="nl")))
       if (len(node.getElementsByTagNameNS(DCN,'abstract'))>0):
          g.add((MOURI, DCTERMS.abstract, Literal(node.getElementsByTagNameNS(DCN,'abstract')[0].firstChild.nodeValue, lang="nl")))
       g.add((MOURI, RDFS.label, Literal(node.getElementsByTagNameNS(DCN,'title')[0].firstChild.nodeValue, lang="nl")))
@@ -47,6 +48,7 @@ def getContent(fileName):
       EVURI = URIRef(DIVEStr + "entity/evt-" + urllib.quote_plus(evtlabel))
       g.add((EVURI, RDF.type, SEM.Event))
       g.add((EVURI, RDFS.label, Literal(evtlabel, lang="nl")))
+	  g.add((EVURI, DCTERMS.description, Literal(modescription, lang="nl")))
       g.add((EVURI, DIVE.depictedBy, MOURI))
       g.add((EVURI, DIVE.hasTimeStamp, Literal(node.getElementsByTagNameNS(DCN,'date')[0].firstChild.nodeValue)))
       

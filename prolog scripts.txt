@@ -51,3 +51,10 @@
  rdf_retractall(A, B, 'http://purl.org/collections/nl/dive/entity/kb-per-Regets').true.
 
  rdf_retractall('http://purl.org/collections/nl/dive/entity/kb-per-Regets',_,_) 
+ 
+ 
+ # Add Labels to KB Events: either first 100 characters after "1. " or first 100 characters
+ forall((rdf(A, rdf:type, sem:'Event','http://purl.org/collections/nl/dive/kb_enriched.ttl'), rdf(A, dive:depictedBy, MO), rdf(MO, dcterms:description,literal(lang(nl,D))) , atom_concat(_,Y,D), atom_concat('1. ',X,Y), sub_atom(X,0,100,_,S),atom_concat(S, '...',E)),(rdf_transaction(rdf_retractall(A,rdfs:label,_)),assert(check(A)),rdf_transaction(rdf_assert(A,rdfs:label,literal(lang(nl,E)),'http://purl.org/collections/nl/dive/kb_enriched.ttl')))).
+
+
+forall((rdf(A, rdf:type, sem:'Event','http://purl.org/collections/nl/dive/kb_enriched.ttl'), not(check(A)), rdf(A, dive:depictedBy, MO), rdf(MO, dcterms:description,literal(lang(nl,X))), sub_atom(X,0,100,_,S),atom_concat(S, '...',E)),(rdf_transaction(rdf_retractall(A,rdfs:label,_)),rdf_transaction(rdf_assert(A,rdfs:label,literal(lang(nl,E)),'http://purl.org/collections/nl/dive/kb_enriched.ttl')))).
