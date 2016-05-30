@@ -40,3 +40,14 @@
 # add conceptscheme
  rdf_assert(oirest,rdf:type, skos:'ConceptScheme',oirest).
  rdf_assert(oirest,rdfs:label, literal('temporary scheme for rest'),oirest).
+
+ 
+ #CLEAN SOME DATA
+ 
+ #REGETS
+ 
+ forall((rdf(A, B, 'http://purl.org/collections/nl/dive/entity/kb-per-Regets'),rdf(A,rdf:type,'http://www.w3.org/ns/oa#Annotation')), rdf_transaction(rdf_retractall(A,_,_))).
+
+ rdf_retractall(A, B, 'http://purl.org/collections/nl/dive/entity/kb-per-Regets').true.
+
+ rdf_retractall('http://purl.org/collections/nl/dive/entity/kb-per-Regets',_,_) 
