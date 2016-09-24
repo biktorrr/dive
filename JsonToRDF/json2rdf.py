@@ -111,6 +111,8 @@ def convert(inputFileName, outputFileName):
     print "\ndone. Saving to " + outputFileName + "..."
     g.serialize(outputFileName, format='turtle')
 
-if __name__ == '__main__':
+'''if __name__ == '__main__':
     args = docopt(__doc__, sys.argv[1:])
     convert(args['<input>'], args['<output>'])
+'''
+convert("v2.json", "v2test.ttl")
