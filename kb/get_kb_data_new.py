@@ -174,7 +174,8 @@ def run_all():
         print 'Done'
         
 def run_one(ipf,opf):
-	g=run(ipf)
+        print 'Running with', ipf
+        g=run(ipf)
         print 'Saving to', opf
         saveToTurtle(g,opf)
         print 'Done'
@@ -182,9 +183,8 @@ def run_one(ipf,opf):
 
 
 def run_dir(ipdir,opdir):
-	for fn in os.listdir(ipdir):
-     		if os.path.isfile(fn):
-	        	print fn
+   for fn in os.listdir(ipdir):
+           print fn
 
 
 
