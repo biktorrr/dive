@@ -1,6 +1,16 @@
 #!/usr/bin/python
 
+# USAGE from command line:
+# > python get_kb_data_new.py inputfile outputfile
+# or
+# > python get_kb_data_new.py inputfile
+# In this latter case, the outputfilename is inputfilename + ".ttl"
+
+# From IDE
+# run_one(inputfileName, outputfileName)
+
 import os
+import sys
 import urllib
 import json
 from xml.dom import minidom, getDOMImplementation
@@ -180,11 +190,17 @@ def run_one(ipf,opf):
         saveToTurtle(g,opf)
         print 'Done'
 
-
-
-def run_dir(ipdir,opdir):
-   for fn in os.listdir(ipdir):
-           print fn
+# Command line executable
+if len(sys.argv)> 0:
+        if len(sys.argv)==2:
+                opf = ipf + '.ttl'
+                run_one(ipf,opf)        
+        elif len(sys.argv)==3:
+                opf = sys.argv[2]
+                print ipf
+                print opf
+                run_one(ipf,opf)        
+                
 
 
 
