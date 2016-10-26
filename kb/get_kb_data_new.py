@@ -192,6 +192,7 @@ def run_one(ipf,opf):
 
 # Command line executable
 if len(sys.argv)> 0:
+        ipf = sys.argv[1]
         if len(sys.argv)==2:
                 opf = ipf + '.ttl'
                 run_one(ipf,opf)        
