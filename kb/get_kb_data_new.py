@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import os
 import urllib
 import json
 from xml.dom import minidom, getDOMImplementation
@@ -172,13 +173,19 @@ def run_all():
         saveToTurtle(g,of)
         print 'Done'
         
+def run_one(ipf,opf):
+	g=run(ipf)
+        print 'Saving to', opf
+        saveToTurtle(g,opf)
+        print 'Done'
 
-### gogo ###
 
 
+def run_dir(ipdir,opdir):
+	for fn in os.listdir(ipdir):
+     		if os.path.isfile(fn):
+	        	print fn
 
-#result = run(MAXREC,DEFKEYWORD).toxml()
-#saveToFile("result"+ KEYWORD + str(MAXREC) + ".xml", result)
 
 
 
