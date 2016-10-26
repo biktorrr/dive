@@ -39,9 +39,15 @@ def run(inputFileName):
                 g = rdflib.Graph()   # add other graphs (for annotations?)
                 print 'done.'
                 print 'Iterating through elements:',
-
+                countert=0
+                tot=len(dom.getElementsByTagName("srw_dc:dcx"))
                 for node in dom.getElementsByTagName("srw_dc:dcx"):
-                        print ".",
+                        #counter
+                        if countert%100 == 0:
+                                print "\t" + str(countert) + "/" + str(tot)
+                                
+                        countert=countert+1
+                                
                         oneTTLS = ''
                         identifier = node.getElementsByTagName("dcx:recordIdentifier")[0].childNodes[0].nodeValue
                         URIString = PREFIX + identifier
@@ -160,7 +166,7 @@ def saveToTurtle(g, fn):
 
 def run_all():
         ipf = "anp.xml"
-        of = "kb_enriched_new.ttl"
+        of = "kb_enriched_new1.ttl"
         g = run(ipf)
         print 'Saving to', of
         saveToTurtle(g,of)
