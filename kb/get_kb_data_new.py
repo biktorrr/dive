@@ -49,7 +49,7 @@ def run(inputFileName):
                 dom = minidom.parse(resp)
                 g = rdflib.Graph()   # add other graphs (for annotations?)
                 print 'done.'
-                print 'Iterating through elements:',
+                print 'Iterating through elements:'
                 countert=0
                 tot=len(dom.getElementsByTagName("srw_dc:dcx"))
                 for node in dom.getElementsByTagName("srw_dc:dcx"):
@@ -84,7 +84,7 @@ def run(inputFileName):
                         g.add((MOURI, DCTERMS.description, Literal(description)))
 
                         # build one event
-                        evtlabel = description[:100]
+                        evtlabel = guessLabel (description)
                         EVURI = URIRef(PREFIX + "evt-" + identifier)
                         g.add((EVURI, RDF.type, SEM.Event))
                         g.add((EVURI, RDFS.label, Literal(evtlabel, lang="nl")))
@@ -99,6 +99,17 @@ def run(inputFileName):
         print "Done"
         return g
 
+# make an event label out of a description. 
+def guessLabel(description):
+        split = description.split('nderwerp')
+        pres = ''
+        if len(split)>1:
+                pres = split[1][1:100]
+        else:
+                pres = description[:100]
+               
+        res = pres.replace('\r\n', ' ').replace('\n',' ')
+        return res
 
 def getDescription(identif):
         result = ""
@@ -107,7 +118,7 @@ def getDescription(identif):
         dom3 = minidom.parse(urlresult)
         for par in dom3.getElementsByTagName("p"):
                 result = result + par.childNodes[0].nodeValue + "\n\n"
-        return result
+        return result.replace('\r\n', ' ').replace('\n',' ')
         
 
 def doNERs(tptaurl, g, MOURI, EVURI):
@@ -117,11 +128,11 @@ def doNERs(tptaurl, g, MOURI, EVURI):
         total = len(entities)
         if total >0:                        
                         try:
-                                for ne in entities:
+                                for ne in entities[0].childNodes:
                                         if (ne.nodeType == ne.ELEMENT_NODE):
                                                 netype = ne.nodeName
-                                                content= ne.firstChild.nodeValue
-                                               # print netype, content
+                                                content= ne.firstChild.nodeValue.encode('utf-8')
+                                                print netype, content
                                                 if netype == "organisation":
                                                        EURI = URIRef(DIVEStr + "kb-org-" + urllib.quote_plus(content))
                                                        g.add((EURI, RDF.type, SEM.Actor))
@@ -191,7 +202,7 @@ def run_one(ipf,opf):
         print 'Done'
 
 # Command line executable
-if len(sys.argv)> 0:
+if len(sys.argv)> 1:
         ipf = sys.argv[1]
         if len(sys.argv)==2:
                 opf = ipf + '.ttl'
