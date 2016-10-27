@@ -132,7 +132,7 @@ def doNERs(tptaurl, g, MOURI, EVURI):
                                         if (ne.nodeType == ne.ELEMENT_NODE):
                                                 netype = ne.nodeName
                                                 content= ne.firstChild.nodeValue.encode('utf-8')
-                                                print netype, content
+                                                #print netype, content
                                                 if netype == "organisation":
                                                        EURI = URIRef(DIVEStr + "kb-org-" + urllib.quote_plus(content))
                                                        g.add((EURI, RDF.type, SEM.Actor))
