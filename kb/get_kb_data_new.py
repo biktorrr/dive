@@ -147,11 +147,11 @@ def doNERs(tptaurl, g, MOURI, EVURI):
                                                        g.add((EVURI, SEM.hasActor, EURI))
                                                 elif netype == "other":
                                                        EURI = URIRef(DIVEStr + "kb-oth-" + urllib.quote_plus(content))
-                                                       g.add((EURI, RDF.type, DIVE.Entity))
+                                                       g.add((EURI, RDF.type, DIVE.OtherEntity))
                                                        g.add((EVURI, DIVE.isRelatedTo, EURI))
                                                 else :
                                                        EURI = URIRef(DIVEStr + "kb-unk-" + urllib.quote_plus(content))
-                                                       g.add((EURI, RDF.type, DIVE.Entity))
+                                                       g.add((EURI, RDF.type, DIVE.OtherEntity))
                                                        g.add((EVURI, DIVE.isRelatedTo, EURI))
 
                                                 g.add((EURI, RDFS.label, Literal(content ,lang="nl")))
