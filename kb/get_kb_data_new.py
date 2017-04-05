@@ -42,7 +42,7 @@ TPTABASE = "http://tomcat.kbresearch.nl/tpta2/analyse?url="
 # take url, retrieve results, for every identifier found, then retrieve the
 # json NER results and enter them in the DOM
 
-def run(inputFileName):
+def run(inputFileName,outputFileName):
         print 'Parsing input file...',
         resp = open(inputFileName)
         if resp:
@@ -56,6 +56,8 @@ def run(inputFileName):
                         #counter
                         if countert%100 == 0:
                                 print "\t" + str(countert) + "/" + str(tot)
+                                saveToTurtle(g,outputFileName)
+                                
                                 
                         countert=countert+1
                                 
@@ -196,7 +198,7 @@ def run_all():
         
 def run_one(ipf,opf):
         print 'Running with', ipf
-        g=run(ipf)
+        g=run(ipf,opf)
         print 'Saving to', opf
         saveToTurtle(g,opf)
         print 'Done'
