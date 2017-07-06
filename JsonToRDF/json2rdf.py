@@ -105,9 +105,29 @@ def getContent(fileName):
 
    return g
 
+# For a Kim JSON file, get all kinds of DIVE triples out.
+def getContentKim(fileName):
+   json_string = open(fileName)
+   data = json.load(json_string)
+
+   # new graph
+   g = rdflib.Graph()   # add other graphs (for annotations?)
+   print "Found %d records, converting." % len(data)
+   for record in data:
+      print('.'),
+      MOURI = URIRef(record["id"]) # media object uri (hash or something nicer?)
+      desc_clean = record["desc_clean"]
+      EVURI = URIRef(record["event"]["id"])
+      event_new = record["event_new"]
+   	
+      g.add((MOURI, DCTERMS.description, Literal(desc_clean, lang="nl")))
+      g.add((EVURI, RDFS.label, Literal(event_new,lang="nl")))
+   
+   return g
+
 def convert(inputFileName, outputFileName):
     print "Loading graph from " + inputFileName
-    g = getContent(inputFileName)
+    g = getContentKim(inputFileName)
     print "\ndone. Saving to " + outputFileName + "..."
     g.serialize(outputFileName, format='turtle')
 
@@ -115,4 +135,4 @@ def convert(inputFileName, outputFileName):
     args = docopt(__doc__, sys.argv[1:])
     convert(args['<input>'], args['<output>'])
 '''
-convert("v2.json", "v2test.ttl")
+convert("bulletins_kim.json", "kimtest.ttl")
